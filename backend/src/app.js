@@ -11,8 +11,10 @@ app.get('/', (_request, response) => {
 
 app.get('/products', productsController.getAllProducts);
 app.get('/products/:id', productsController.getProductsById);
-app.get('/sales', salesController.getAllProducts);
-app.get('/sales/:id', salesController.getProductsById);
+app.get('/sales', salesController.getAllSales);
+app.get('/sales/:id', salesController.getSalesById);
+app.post('/products', productsController.createProduct);
+app.post('/sales', salesController.createSale);
 
 app.use((err, req, res, next) => {
   console.log(err);
