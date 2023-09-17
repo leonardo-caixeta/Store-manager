@@ -103,7 +103,7 @@ describe('Product Controller', function () {
       sinon.stub(productsService, 'deleteProduct').resolves(productDeletedMock);
 
       const req = {
-        params: { id: productDeletedMock.data.id },
+        params: { id: productSuccessMock.data.id },
         body: { },
       };
       const res = {

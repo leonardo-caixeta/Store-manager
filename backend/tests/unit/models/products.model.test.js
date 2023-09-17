@@ -33,7 +33,7 @@ describe('Product Model', function () {
 
   describe('createProduct()', function () {
     it('Should return the created product', async function () {
-      sinon.stub(connection, 'execute').resolves([[{ insertId: productMock.id }]]);
+      sinon.stub(connection, 'execute').resolves([{ insertId: productMock.id }]);
 
       const product = await productsModel.createProduct({ name: productMock.name });
 

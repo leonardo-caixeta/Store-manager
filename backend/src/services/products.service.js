@@ -29,15 +29,15 @@ const createProduct = async ({ name }) => {
 };
 
 const updateProduct = async ({ id, name }) => {
-  const { status, data } = await getProductsById(id);
-
-  if (status !== 'SUCCESSFUL') return { status, data };
-
   const error = schemas.validateNewProduct({ name });
 
   if (error) {
     return { status: error.status, data: { message: error.message } };
   }
+
+  const { status, data } = await getProductsById(id);
+
+  if (status !== 'SUCCESSFUL') return { status, data };
 
   const updatedProduct = await productsModel.updateProduct({ id, name });
 
