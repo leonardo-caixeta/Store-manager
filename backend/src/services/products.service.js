@@ -3,9 +3,7 @@ const schemas = require('./validations/validateNewProduct');
 
 const getAllProducts = async () => {
   const products = await productsModel.getAllProducts();
-  if (!products) {
-    return { status: 'CONFLICT', data: products };
-  }
+
   return { status: 'SUCCESSFUL', data: products };
 };
 

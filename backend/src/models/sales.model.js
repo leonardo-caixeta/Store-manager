@@ -30,27 +30,17 @@ const getSalesById = async (saleId) => {
 };
 
 const createSale = async (newSale) => {
-  const pool = await connection.getConnection();
-  try {
-    await pool.beginTransaction();
+  const [{ insertId }] = await connection.execute(`
+  INSERT INTO sales () VALUES ();
+  `);
+  const mappedNewSale = newSale.map(({ productId, quantity }) => [insertId, productId, quantity]);
 
-    const [{ insertId }] = await pool.query(`
-    INSERT INTO sales () VALUES ();
-    `);
-    const mappedNewSale = newSale.map(({ productId, quantity }) => [insertId, productId, quantity]);
+  await connection.query(`
+    INSERT INTO sales_products
+    (sale_id, product_id, quantity) VALUES ?;
+  `, [mappedNewSale]);
 
-    await pool.query(`
-      INSERT INTO sales_products
-      (sale_id, product_id, quantity) VALUES ?;
-    `, [mappedNewSale]);
-
-    await pool.commit();
-
-    return { id: insertId, itemsSold: newSale };
-  } catch (error) {
-    await pool.rollback();
-    throw error;
-  } finally { pool.release(); }
+  return { id: insertId, itemsSold: newSale };
 };
 
 module.exports = {
