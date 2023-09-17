@@ -15,6 +15,8 @@ app.get('/sales', salesController.getAllSales);
 app.get('/sales/:id', salesController.getSalesById);
 app.post('/products', productsController.createProduct);
 app.post('/sales', salesController.createSale);
+app.put('/products/:id', productsController.updatedProduct);
+app.delete('/products/:id', productsController.deleteProduct);
 
 app.use((err, req, res, next) => {
   console.log(err);

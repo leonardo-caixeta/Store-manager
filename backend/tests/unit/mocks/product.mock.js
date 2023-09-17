@@ -1,8 +1,10 @@
-const allProducts = [
-  {
-    id: 1,
-    name: 'Martelo de Thor',
-  },
+const productMock = {
+  id: 1,
+  name: 'Martelo de Thor',
+};
+
+const productsMock = [
+  productMock,
   {
     id: 2,
     name: 'Traje de encolhimento',
@@ -13,22 +15,7 @@ const allProducts = [
   },
 ];
 
-const productById = [
-  {
-    id: 1,
-    name: 'Martelo de Thor',
-  },
-];
-
-const createdProduct = [
-  {
-    id: 4,
-    name: 'Rebimboca da parafuseta',
-  },
-];
-
 module.exports = {
-  allProducts,
-  productById,
-  createdProduct,
+  productsMock,
+  productMock,
 };

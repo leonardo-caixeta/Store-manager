@@ -18,15 +18,33 @@ const getProductsById = async (productId) => {
 };
 
 const createProduct = async ({ name }) => {
-  const product = await connection.execute(`
+  const [[{ insertId }]] = await connection.execute(`
     INSERT INTO products (name) VALUES (?)
   `, [name]);
 
-  return product;
+  return { id: insertId, name };
+};
+
+const updateProduct = async ({ id, name }) => {
+  await connection.execute(`
+    UPDATE products SET name = (?) WHERE id = (?);
+  `, [name, id]);
+
+  return { id, name };
+};
+
+const deleteProduct = async (id) => {
+  await connection.execute(`
+    DELETE FROM products WHERE ID = (?)
+  `, [id]);
+
+  return id;
 };
 
 module.exports = {
   getAllProducts,
   getProductsById,
   createProduct,
+  updateProduct,
+  deleteProduct,
 };

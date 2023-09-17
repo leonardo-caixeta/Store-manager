@@ -24,18 +24,42 @@ const createProduct = async ({ name }) => {
   if (error) {
     return { status: error.status, data: { message: error.message } };
   }
+
   const product = await productsModel.createProduct({ name });
-  const { insertId } = product[0];
-  const newProduct = { id: insertId, name };
-  if (!product) {
-    return { status: 'CONFLICT', data: product };
+
+  return { status: 'CREATED', data: product };
+};
+
+const updateProduct = async ({ id, name }) => {
+  const { status, data } = await getProductsById(id);
+
+  if (status !== 'SUCCESSFUL') return { status, data };
+
+  const error = schemas.validateNewProduct({ name });
+
+  if (error) {
+    return { status: error.status, data: { message: error.message } };
   }
 
-  return { status: 'CREATED', data: newProduct };
+  const updatedProduct = await productsModel.updateProduct({ id, name });
+
+  return { status: 'SUCCESSFUL', data: updatedProduct };
+};
+
+const deleteProduct = async (id) => {
+  const { status, data } = await getProductsById(id);
+
+  if (status !== 'SUCCESSFUL') return { status, data };
+
+  await productsModel.deleteProduct(id);
+
+  return { status: 'DELETED', data: null };
 };
 
 module.exports = {
   getAllProducts,
   getProductsById,
   createProduct,
+  updateProduct,
+  deleteProduct,
 };
