@@ -108,13 +108,13 @@ describe('Product Controller', function () {
       };
       const res = {
         status: sinon.stub().returnsThis(),
-        end: sinon.stub(),
+        json: sinon.stub(),
       };
 
       await productsController.deleteProduct(req, res);
 
       expect(res.status).to.have.been.calledWith(204);
-      expect(res.end).to.have.been.calledWith();
+      expect(res.json).to.have.been.calledWith(null);
     });
   });
 });

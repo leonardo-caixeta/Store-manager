@@ -13,7 +13,7 @@ const addSale = Joi.array().items(Joi.object(
   },
 )).messages({
   'any.required': '"{#key}" is required',
-  'number.min': '"{#key}"must be greater than or equal to 1',
+  'number.min': '"{#key}" must be greater than or equal to 1',
 });
 
 module.exports = {

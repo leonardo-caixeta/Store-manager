@@ -15,7 +15,7 @@ const getAllSales = async () => {
 };
 
 const getSalesById = async (saleId) => {
-  const [sales] = await connection.execute(`
+  const [sale] = await connection.execute(`
   SELECT
     s.date,
     sp.product_id AS productId,
@@ -26,7 +26,7 @@ const getSalesById = async (saleId) => {
   ORDER BY s.id, sp.product_id;
   `, [saleId]);
 
-  return sales;
+  return sale;
 };
 
 const createSale = async (newSale) => {
