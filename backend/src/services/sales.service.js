@@ -39,10 +39,6 @@ const createSale = async (newSale) => {
 
   const sale = await salesModel.createSale(newSale);
 
-  if (!sale) {
-    return { status: 'CONFLICT', data: sale };
-  }
-
   return { status: 'CREATED', data: sale };
 };
 
