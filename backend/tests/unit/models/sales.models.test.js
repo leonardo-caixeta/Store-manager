@@ -43,8 +43,7 @@ describe('Product Model', function () {
   //     },
   //   ];
   //   it('Should return the created sale', async function () {
-  //     // sinon.stub(connection, 'execute').resolves();
-  //     sinon.stub(connection, 'query').resolves(newSalePayload);
+  //     sinon.stub(connection, 'execute').resolves(newSalePayload);
 
   //     const sale = await salesModel.createSale(newSalePayload);
 
@@ -52,4 +51,15 @@ describe('Product Model', function () {
   //     expect(sale).to.be.deep.equal(newSalePayload);
   //   });
   // });
+
+  describe('deleteSale()', function () {
+    it('Should return the deleted ID', async function () {
+      sinon.stub(connection, 'execute').resolves([[]]);
+
+      const deletedSaleid = await salesModel.deleteSale(saleMock.saleId);
+
+      expect(deletedSaleid).to.be.an('number');
+      expect(deletedSaleid).to.be.deep.equal(saleMock.saleId);
+    });
+  });
 });

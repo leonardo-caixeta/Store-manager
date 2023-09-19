@@ -7,7 +7,7 @@ chai.use(sinonChai);
 
 const { salesController } = require('../../../src/controllers');
 const { salesService } = require('../../../src/services');
-const { salesSuccessMock, saleSuccessMock, saleCreatedMock } = require('../mocks/sale.service.mock');
+const { salesSuccessMock, saleSuccessMock, saleCreatedMock, saleDeletedMock } = require('../mocks/sale.service.mock');
 
 describe('Product Controller', function () {
   afterEach(function () {
@@ -71,6 +71,26 @@ describe('Product Controller', function () {
 
       expect(res.status).to.have.been.calledWith(201);
       expect(res.json).to.have.been.calledWith(saleCreatedMock.data);
+    });
+  });
+
+  describe('DELETE - /sales/:id', function () {
+    it('Should delete sale - status 204', async function () {
+      sinon.stub(salesService, 'deleteSale').resolves(saleDeletedMock);
+
+      const req = {
+        params: { id: saleSuccessMock.data.id },
+        body: { },
+      };
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
+
+      await salesController.deleteSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(204);
+      expect(res.json).to.have.been.calledWith(null);
     });
   });
 });

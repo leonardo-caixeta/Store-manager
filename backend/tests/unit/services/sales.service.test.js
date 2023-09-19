@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const { saleSuccessMock, saleNotFoundMock, salesSuccessMock, saleCreatedMock } = require('../mocks/sale.service.mock');
+const { saleSuccessMock, saleNotFoundMock, salesSuccessMock, saleCreatedMock, saleDeletedMock } = require('../mocks/sale.service.mock');
 const { salesModel, productsModel } = require('../../../src/models');
 const { salesService } = require('../../../src/services');
 const { productSuccessMock } = require('../mocks/product.service.mock');
@@ -77,6 +77,26 @@ describe('Sale Service', function () {
       expect(sale.status).to.be.an('string');
       expect(sale.data.message).to.be.an('string');
       expect(sale.status).to.be.equal('REQUIRED_VALUE');
+    });
+  });
+
+  describe('deleteSales()', function () {
+    it('Should return a success response with sales', async function () {
+      sinon.stub(salesModel, 'getSalesById').resolves(saleSuccessMock.data);
+      sinon.stub(salesModel, 'deleteSale').resolves(null);
+
+      const deleteSale = await salesService.deleteSale(saleSuccessMock.data.saleId);
+
+      expect(deleteSale).to.be.deep.equal(saleDeletedMock);
+    });
+
+    it('Should return a not found response if sale not exists', async function () {
+      sinon.stub(salesModel, 'getSalesById').resolves(null);
+
+      const sale = await salesService.deleteSale(saleSuccessMock.data.saleId);
+
+      expect(sale).to.be.an('object');
+      expect(sale).to.be.deep.equal(sale);
     });
   });
 });

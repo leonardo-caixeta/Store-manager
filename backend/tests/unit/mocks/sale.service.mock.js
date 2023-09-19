@@ -16,9 +16,12 @@ const returnCreatedMock = {
 
 const saleCreatedMock = { status: 'CREATED', data: returnCreatedMock };
 
+const saleDeletedMock = { status: 'DELETED', data: null };
+
 module.exports = {
   saleSuccessMock,
   salesSuccessMock,
   saleNotFoundMock,
   saleCreatedMock,
+  saleDeletedMock,
 };
