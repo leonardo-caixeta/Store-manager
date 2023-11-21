@@ -35,7 +35,7 @@ describe('Sale Service', function () {
     it('Should return a not found response if sale not exists', async function () {
       sinon.stub(salesModel, 'getSalesById').resolves([]);
 
-      const sale = await salesService.getSalesById(saleSuccessMock.data.saleId);
+      const sale = await salesService.getSalesById();
 
       expect(sale).to.be.an('object');
       expect(sale).to.be.deep.equal(saleNotFoundMock);
@@ -83,7 +83,7 @@ describe('Sale Service', function () {
   describe('deleteSales()', function () {
     it('Should return a success response with sales', async function () {
       sinon.stub(salesModel, 'getSalesById').resolves(saleSuccessMock.data);
-      sinon.stub(salesModel, 'deleteSale').resolves(null);
+      sinon.stub(salesModel, 'deleteSale').resolves(saleSuccessMock.data.saleId);
 
       const deleteSale = await salesService.deleteSale(saleSuccessMock.data.saleId);
 
@@ -93,7 +93,7 @@ describe('Sale Service', function () {
     it('Should return a not found response if sale not exists', async function () {
       sinon.stub(salesModel, 'getSalesById').resolves(null);
 
-      const sale = await salesService.deleteSale(saleSuccessMock.data.saleId);
+      const sale = await salesService.deleteSale(null);
 
       expect(sale).to.be.an('object');
       expect(sale).to.be.deep.equal(sale);

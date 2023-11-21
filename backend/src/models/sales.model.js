@@ -45,7 +45,7 @@ const createSale = async (newSale) => {
 
 const deleteSale = async (id) => {
   await connection.execute(`
-    DELETE FROM products WHERE ID = (?)
+    DELETE FROM sales WHERE id = (?);
   `, [id]);
 
   return id;

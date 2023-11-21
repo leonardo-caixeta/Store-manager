@@ -13,7 +13,7 @@ const getAllSales = async () => {
 const getSalesById = async (productId) => {
   const sales = await salesModel.getSalesById(productId);
 
-  if (sales.length < 1) {
+  if (sales === null || sales.length < 1) {
     return { status: 'NOT_FOUND', data: { message: 'Sale not found' } };
   }
 
@@ -43,11 +43,10 @@ const createSale = async (newSale) => {
 };
 
 const deleteSale = async (id) => {
-  const idDeleted = await salesModel.getSalesById(id);
+  const { status, data } = await getSalesById(id);
+  console.log(status);
 
-  if (!idDeleted) {
-    return { status: 'NOT_FOUND', data: { message: 'Sale not found' } };
-  }
+  if (status !== 'SUCCESSFUL') return { status, data };
 
   await salesModel.deleteSale(id);
 
